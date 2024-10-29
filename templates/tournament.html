@@ -1,0 +1,140 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{tournament[0]["name"]}}
+{% endblock %}
+
+{% block main %}
+    {% if round3[0]["winner_id"] != NULL %}
+                {% for team in teams %}
+                    {% if team["id"] == round3[0]["winner_id"] %}
+                        <h2>The winner is: {{ team["name"] }}!</h5>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+    <h3>{{ tournament[0]["name"] }}</h3>
+    <h5>Quarter Finals</h5>
+        <form action="/tournament" method="post">
+            <table class="table table-bordered round align-middle mx-auto">
+                <tbody>
+                    {% for match in round1 %}
+                        <tr>
+                            {% for team in teams %}
+                                {% if team["id"] == match["local_id"] %}
+                                    <td class="match-team">{{ team["name"] }}</td>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if match['local_points'] != None and match['visit_points'] != None %}
+                                <td ><input type="number" class="form-control number-input" name="localPointsIn{{ match['seed'] }}" disabled value="{{match['local_points']}}"></td>
+                                <td ><input type="number" class="form-control number-input" name="visitPointsIn{{ match['seed'] }}" disabled value="{{match['visit_points']}}"></td>
+                            {% else %}
+                                <td ><input type="number" class="form-control number-input" name="localPointsIn{{ match['seed'] }}" min="0"max="99"></td>
+                                <td ><input type="number" class="form-control number-input" name="visitPointsIn{{ match['seed'] }}" min="0"max="99"></td>
+                            {%endif%}
+
+                            {% for team in teams %}
+                                {% if team["id"] == match["visit_id"] %}
+                                    <td class="match-team">{{ team["name"] }}</td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <input type="hidden" name="round" value="1">
+            <input type="hidden" name="tournament_id" value="{{ tournament_id }}">
+            <button class="btn btn-outline-dark submit-tournament" type="submit">Submit Results</button>
+        </form>
+        <h5>Semifinals</h5>
+        <form action="/tournament" method="post">
+            <table class="table table-bordered round align-middle mx-auto">
+                <tbody>
+                    {% for match in round2 %}
+                        <tr>
+                            {% if match["local_id"] %}
+                                {% for team in teams %}
+                                    {% if team["id"] == match["local_id"] %}
+                                        <td class="match-team">{{ team["name"] }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <td class="match-team"><small class="text-body-secondary">QF Winner</small></td>
+                            {% endif %}
+
+                            {% if (match['local_points'] != None and match['visit_points'] != None) or (match['local_id'] == None or match['visit_id'] == None) %}
+                                <td><input type="number" class="form-control number-input" name="localPointsIn{{ match['seed'] }}" disabled value="{{match['local_points']}}"></td>
+                                <td><input type="number" class="form-control number-input" name="visitPointsIn{{ match['seed'] }}" disabled value="{{match['visit_points']}}"></td>
+                            {% else %}
+                                <td><input type="number" class="form-control number-input" name="localPointsIn{{ match['seed'] }}" min="0"max="99"></td>
+                                <td><input type="number" class="form-control number-input" name="visitPointsIn{{ match['seed'] }}" min="0"max="99"></td>
+                            {%endif%}
+
+                            {% if match["visit_id"] %}
+                                {% for team in teams %}
+                                    {% if team["id"] == match["visit_id"] %}
+                                        <td class="match-team">{{ team["name"] }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <td class="match-team"><small class="text-body-secondary">QF Winner</small></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <input type="hidden" name="tournament_id" value="{{ tournament_id }}">
+            <input type="hidden" name="round" value="2">
+            {% if round2[0]['local_id'] != None and round2[0]['visit_id'] != None and round2[1]['local_id'] != None and round2[1]['visit_id'] != None %}
+                <button class="btn btn-outline-dark submit-tournament" type="submit">Submit Results</button>
+            {% else %}
+                <button disabled class="btn btn-outline-dark submit-tournament" type="submit">Submit Results</button>
+            {% endif %}
+        </form>
+        <h5>Final</h5>
+        <form action="/tournament" method="post">
+            <table class="table table-bordered round align-middle mx-auto">
+                <tbody>
+                    {% for match in round3 %}
+                        <tr>
+                            {% if match["local_id"] %}
+                                {% for team in teams %}
+                                    {% if team["id"] == match["local_id"] %}
+                                        <td class="match-team">{{ team["name"] }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <td class="match-team"><small class="text-body-secondary">SF Winner</small></td>
+                            {% endif %}
+
+                            {% if (match['local_points'] != None and match['visit_points'] != None) or (match['local_id'] == None or match['visit_id'] == None) %}
+                                <td><input type="number" class="form-control number-input" name="localPointsIn{{ match['seed'] }}" disabled value="{{match['local_points']}}"></td>
+                                <td><input type="number" class="form-control number-input" name="visitPointsIn{{ match['seed'] }}" disabled value="{{match['visit_points']}}"></td>
+                            {% else %}
+                                <td><input type="number" class="form-control number-input" name="localPointsIn{{ match['seed'] }}" min="0"max="99"></td>
+                                <td><input type="number" class="form-control number-input" name="visitPointsIn{{ match['seed'] }}" min="0"max="99"></td>
+                            {%endif%}
+
+                            {% if match["visit_id"] %}
+                                {% for team in teams %}
+                                    {% if team["id"] == match["visit_id"] %}
+                                        <td class="match-team">{{ team["name"] }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <td class="match-team"><small class="text-body-secondary">SF Winner</small></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <input type="hidden" name="tournament_id" value="{{ tournament_id }}">
+            <input type="hidden" name="round" value="3">
+            {% if round3[0]['local_id'] != None and round3[0]['visit_id'] != None %}
+                <button class="btn btn-outline-dark submit-tournament" type="submit">Submit Results</button>
+            {% else %}
+                <button disabled class="btn btn-outline-dark submit-tournament" type="submit">Submit Results</button>
+            {% endif %}
+        </form>
+
+{% endblock %}

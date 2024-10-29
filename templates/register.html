@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    {% if userRequired %}
+    <div class="alert alert-danger" role="alert">
+        User Required
+    </div>
+    {% elif passwordRequired %}
+    <div class="alert alert-danger" role="alert">
+        Password Required
+    </div>
+    {% elif passwordConfirmationRequired %}
+    <div class="alert alert-danger" role="alert">
+        Please confirm your password
+    </div>
+    {% elif userAlreadyExists %}
+    <div class="alert alert-danger" role="alert">
+        User Already Exists
+    </div>
+    {% elif passwordsDontMatch %}
+    <div class="alert alert-danger" role="alert">
+        Passwords Don't Match
+    </div>
+    {% endif %}
+    <form action="/register" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" name="confirmation" placeholder="Confirm your password" type="password">
+        </div>
+        <button class="btn btn-outline-dark" type="submit">Register</button>
+    </form>
+{% endblock %}

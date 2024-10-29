@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+    <h3>Tournaments</h3>
+
+    {% if tournamentsLength != 0 %}
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-active">
+                <th scope="col">Name</th>
+                <th scope="col">Size</th>
+                <th scope="col">Sport</th>
+                <th scope="col" class="description">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tournament in tournaments %}
+            <tr>
+                <td class="align-middle">
+                    <form action="/tournament" method="GET">
+                        <input type="hidden" name="tournament_id" value="{{ tournament['id'] }}">
+                        <button type="submit" class="btn btn-link">{{ tournament["name"] }}</button>
+                    </form>
+                </td>
+                <td class="align-middle">
+                    {{ tournament["size"] }}
+                </td>
+                <td class="align-middle">
+                    {% if tournament["sport"] %}
+                        {{ tournament["sport"] }}
+                    {% else %}
+                        <small class="text-body-secondary">No Data</small>
+                    {% endif %}
+                </td>
+                <td class="align-middle description">
+                    {% if tournament["description"] %}
+                        {{ tournament["description"] }}
+                    {% else %}
+                        <small class="text-body-secondary description">No Data</small>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <h4>There's no tournaments to show, <a href="/create">create one!</a></h4>
+    {% endif %}
+
+    <script>
+        window.addEventListener('resize', function() {
+          var descriptions = document.querySelectorAll('.description');
+          if (window.innerWidth <= 600) {
+            descriptions.forEach(function(description) {
+              description.hidden = true;
+            });
+          } else {
+            descriptions.forEach(function(description) {
+              description.hidden = false;
+            });
+          }
+        });
+
+        // Set initial state
+        if (window.innerWidth <= 600) {
+          var descriptions = document.querySelectorAll('.description');
+          descriptions.forEach(function(description) {
+            description.hidden = true;
+          });
+        }
+        </script>
+{% endblock %}

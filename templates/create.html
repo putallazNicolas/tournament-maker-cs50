@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create
+{% endblock %}
+
+{% block main %}
+    <form action="/create" method="post">
+        <h2>Create a Tournament</h2>
+        <p><small>* Means Mandatory</small></p>
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="mb-3">
+                    <input maxlength="15" autocomplete="off" autofocus class="form-control mx-auto w-auto" name="name" placeholder="Tournament Name*" type="text">
+                </div>
+
+                <div class="mb-3">
+                    <input maxlength="10" autocomplete="off"class="form-control mx-auto w-auto" name="sport" placeholder="Sport" type="text">
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <textarea maxlength="50" autocomplete="off" class="form-control mx-auto w-auto" name="description" placeholder="Description" type="text"></textarea>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <input maxlength="10" autocomplete="off" class="form-control mx-auto w-auto" name="team1" placeholder="Team 1*" type="text">
+                </div>
+                <div class="mb-3">
+                    <input maxlength="10" autocomplete="off" class="form-control mx-auto w-auto" name="team2" placeholder="Team 2*" type="text">
+                </div>
+                <div class="mb-3">
+                    <input maxlength="10" autocomplete="off" class="form-control mx-auto w-auto" name="team3" placeholder="Team 3*" type="text">
+                </div>
+                <div class="mb-3">
+                    <input maxlength="10" autocomplete="off" class="form-control mx-auto w-auto" name="team4" placeholder="Team 4*" type="text">
+                </div>
+                <div class="mb-3">
+                    <input maxlength="10" autocomplete="off" class="form-control mx-auto w-auto" name="team5" placeholder="Team 5*" type="text">
+                </div>
+                <div class="mb-3">
+                    <input maxlength="10" autocomplete="off" class="form-control mx-auto w-auto" name="team6" placeholder="Team 6*" type="text">
+                </div>
+                <div class="mb-3">
+                    <input maxlength="10" autocomplete="off" class="form-control mx-auto w-auto" name="team7" placeholder="Team 7*" type="text">
+                </div>
+                <div class="mb-3">
+                    <input maxlength="10" autocomplete="off" class="form-control mx-auto w-auto" name="team8" placeholder="Team 8*" type="text">
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-outline-dark" type="submit">Create</button>
+    </form>
+{% endblock %}
